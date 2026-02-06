@@ -130,9 +130,9 @@ else
 fi
 
 run_test "Verificar Docker Compose"
-if command -v docker-compose &> /dev/null || docker compose version &> /dev/null; then
-    if command -v docker-compose &> /dev/null; then
-        COMPOSE_VERSION=$(docker-compose --version)
+if command -v docker compose &> /dev/null || docker compose version &> /dev/null; then
+    if command -v docker compose &> /dev/null; then
+        COMPOSE_VERSION=$(docker compose --version)
     else
         COMPOSE_VERSION=$(docker compose version)
     fi
@@ -177,7 +177,7 @@ fi
 print_header "4. VERIFICAÇÃO DE SERVIÇOS"
 
 log_info "Verificando se os serviços estão rodando..."
-if docker-compose ps 2>/dev/null | grep -q "Up" || docker compose ps 2>/dev/null | grep -q "Up"; then
+if docker compose ps 2>/dev/null | grep -q "Up" || docker compose ps 2>/dev/null | grep -q "Up"; then
     log_info "Serviços estão rodando. Executando testes..."
 
     run_test "Openclawd App"
@@ -213,7 +213,7 @@ if docker-compose ps 2>/dev/null | grep -q "Up" || docker compose ps 2>/dev/null
         log_success "Container PostgreSQL está rodando"
 
         # Testar conexão
-        if docker-compose exec -T postgres pg_isready -U openclawd > /dev/null 2>&1; then
+        if docker compose exec -T postgres pg_isready -U openclawd > /dev/null 2>&1; then
             log_success "PostgreSQL aceitando conexões"
         else
             log_error "PostgreSQL não está aceitando conexões"
@@ -227,7 +227,7 @@ if docker-compose ps 2>/dev/null | grep -q "Up" || docker compose ps 2>/dev/null
         log_success "Container Redis está rodando"
 
         # Testar ping
-        if docker-compose exec -T redis redis-cli ping > /dev/null 2>&1; then
+        if docker compose exec -T redis redis-cli ping > /dev/null 2>&1; then
             log_success "Redis respondendo a ping"
         else
             log_error "Redis não está respondendo"

@@ -133,8 +133,8 @@ docker ps
 ./scripts/manage.sh health
 
 # Manual
-docker-compose ps
-docker-compose logs openclawd
+docker compose ps
+docker compose logs openclawd
 ```
 
 ### Testar API
@@ -238,8 +238,8 @@ hey -n 10000 -c 100 http://localhost:3000/health
 
 2. **Verificar serviços específicos:**
 ```bash
-docker-compose logs openclawd
-docker-compose logs kanban-monitor
+docker compose logs openclawd
+docker compose logs kanban-monitor
 ```
 
 3. **Reiniciar serviços:**
@@ -434,7 +434,7 @@ docker ps | grep openclawd
 docker logs openclawd-app
 
 # Reiniciar
-docker-compose restart openclawd
+docker compose restart openclawd
 ```
 
 ## 🎉 Conclusão

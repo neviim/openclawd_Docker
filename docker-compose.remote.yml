@@ -1,7 +1,5 @@
 # Docker Compose Override para Acesso Remoto
-# Use: docker-compose -f docker-compose.yml -f docker-compose.remote.yml up
-
-version: '3.8'
+# Use: docker compose -f docker-compose.yml -f docker-compose.remote.yml up
 
 services:
   # Nginx Reverse Proxy para acesso remoto seguro

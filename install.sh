@@ -13,12 +13,12 @@ NC='\033[0m'
 
 echo -e "${BLUE}"
 cat << "EOF"
-   ___                    ____ _                 _
-  / _ \ _ __   ___ _ __  / ___| | __ _ _   _  __| | ___
- | | | | '_ \ / _ \ '_ \| |   | |/ _` | | | |/ _` |/ _ \
- | |_| | |_) |  __/ | | | |___| | (_| | |_| | (_| |  __/
-  \___/| .__/ \___|_| |_|\____|_|\__,_|\__,_|\__,_|\___|
-       |_|
+  ___                    ____ _               _   
+ / _ \ _ __   ___ _ __  / ___| |__   ___  ___| |_ 
+| | | | '_ \ / _ \ '_ \| |  _| '_ \ / _ \/ __| __|
+| |_| | |_) |  __/ | | | |_| | | | | (_) \__ \ |_ 
+ \___/| .__/ \___|_| |_|\____|_| |_|\___/|___/\__|
+      |_|
 
   Instalação Completa e Segura
 
@@ -36,7 +36,7 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-if ! command -v docker-compose &> /dev/null && ! docker compose version &> /dev/null; then
+if ! command -v docker compose &> /dev/null && ! docker compose version &> /dev/null; then
     echo -e "${YELLOW}Docker Compose não encontrado!${NC}"
     echo "Por favor, instale o Docker Compose: https://docs.docker.com/compose/install/"
     exit 1

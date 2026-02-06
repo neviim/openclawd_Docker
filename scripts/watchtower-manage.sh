@@ -56,7 +56,7 @@ start() {
         return
     fi
 
-    docker-compose up -d watchtower
+    docker compose up -d watchtower
     sleep 2
 
     if is_running; then
@@ -78,7 +78,7 @@ stop() {
         return
     fi
 
-    docker-compose stop watchtower
+    docker compose stop watchtower
     log_success "Watchtower parado"
 }
 
@@ -256,7 +256,7 @@ enable_container() {
     echo "    labels:"
     echo "      - \"com.centurylinklabs.watchtower.enable=true\""
     echo ""
-    log_info "Depois execute: docker-compose up -d $container"
+    log_info "Depois execute: docker compose up -d $container"
 }
 
 # Informações

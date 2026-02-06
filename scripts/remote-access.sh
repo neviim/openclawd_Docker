@@ -45,14 +45,14 @@ enable_remote() {
     mkdir -p logs/nginx
 
     # Parar serviços se estiverem rodando
-    if docker-compose ps | grep -q "Up"; then
+    if docker compose ps | grep -q "Up"; then
         log_info "Parando serviços..."
-        docker-compose down
+        docker compose down
     fi
 
     # Iniciar com modo remoto
     log_info "Iniciando serviços com acesso remoto..."
-    docker-compose -f docker-compose.yml -f docker-compose.remote.yml up -d
+    docker compose -f docker-compose.yml -f docker-compose.remote.yml up -d
 
     log_success "Acesso remoto ativado!"
     echo ""
@@ -72,10 +72,10 @@ enable_remote() {
 disable_remote() {
     log_info "Desativando acesso remoto..."
 
-    docker-compose down
+    docker compose down
 
     log_info "Iniciando serviços em modo local..."
-    docker-compose up -d
+    docker compose up -d
 
     log_success "Acesso remoto desativado. Serviços acessíveis apenas localmente."
 }
@@ -165,7 +165,7 @@ enable_auth() {
 
     log_success "Autenticação ativada"
     log_info "Reiniciando Nginx..."
-    docker-compose -f docker-compose.yml -f docker-compose.remote.yml restart nginx-proxy
+    docker compose -f docker-compose.yml -f docker-compose.remote.yml restart nginx-proxy
 
     log_success "Pronto! Agora é necessário usuário e senha para acessar"
 }
@@ -186,7 +186,7 @@ disable_auth() {
 
     log_success "Autenticação desativada"
     log_info "Reiniciando Nginx..."
-    docker-compose -f docker-compose.yml -f docker-compose.remote.yml restart nginx-proxy
+    docker compose -f docker-compose.yml -f docker-compose.remote.yml restart nginx-proxy
 
     log_success "Pronto! Acesso sem autenticação"
 }
@@ -272,7 +272,7 @@ configure_cors() {
     fi
 
     log_info "Reiniciando serviços..."
-    docker-compose -f docker-compose.yml -f docker-compose.remote.yml restart openclawd
+    docker compose -f docker-compose.yml -f docker-compose.remote.yml restart openclawd
 }
 
 # Menu principal

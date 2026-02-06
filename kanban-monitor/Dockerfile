@@ -4,8 +4,8 @@ FROM node:20-alpine
 RUN apk add --no-cache curl tini
 
 # Criar usuário não-root
-RUN addgroup -g 1001 kanban && \
-    adduser -D -u 1001 -G kanban kanban
+RUN addgroup -S kanban && \
+    adduser -S -G kanban kanban
 
 # Criar diretórios
 RUN mkdir -p /app /data /logs && \
@@ -17,7 +17,7 @@ WORKDIR /app
 COPY --chown=kanban:kanban package*.json ./
 
 # Instalar dependências
-RUN npm ci --only=production && \
+RUN npm install --omit=dev && \
     npm cache clean --force
 
 # Copiar código

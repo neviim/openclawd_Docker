@@ -42,7 +42,7 @@ check_dependencies() {
         exit 1
     fi
 
-    if ! command -v docker-compose &> /dev/null && ! docker compose version &> /dev/null; then
+    if ! command -v docker compose &> /dev/null && ! docker compose version &> /dev/null; then
         log_error "Docker Compose não está instalado!"
         exit 1
     fi
@@ -92,19 +92,19 @@ EOF
 # Build das imagens
 build_images() {
     log_info "Construindo imagens Docker..."
-    docker-compose build --no-cache
+    docker compose build --no-cache
     log_success "Imagens construídas com sucesso"
 }
 
 # Iniciar serviços
 start_services() {
     log_info "Iniciando serviços..."
-    docker-compose up -d
+    docker compose up -d
 
     log_info "Aguardando serviços ficarem saudáveis..."
     sleep 5
 
-    docker-compose ps
+    docker compose ps
     log_success "Serviços iniciados"
 
     echo ""
@@ -116,25 +116,25 @@ start_services() {
 # Parar serviços
 stop_services() {
     log_info "Parando serviços..."
-    docker-compose down
+    docker compose down
     log_success "Serviços parados"
 }
 
 # Reiniciar serviços
 restart_services() {
     log_info "Reiniciando serviços..."
-    docker-compose restart
+    docker compose restart
     log_success "Serviços reiniciados"
 }
 
 # Status dos serviços
 status_services() {
     log_info "Status dos serviços:"
-    docker-compose ps
+    docker compose ps
 
     echo ""
     log_info "Logs recentes:"
-    docker-compose logs --tail=20
+    docker compose logs --tail=20
 }
 
 # Ver logs
@@ -142,9 +142,9 @@ view_logs() {
     SERVICE=${1:-}
 
     if [ -z "$SERVICE" ]; then
-        docker-compose logs -f
+        docker compose logs -f
     else
-        docker-compose logs -f "$SERVICE"
+        docker compose logs -f "$SERVICE"
     fi
 }
 
@@ -156,7 +156,7 @@ clean_data() {
 
     if [[ $REPLY =~ ^[Ss]$ ]]; then
         log_info "Parando serviços..."
-        docker-compose down -v
+        docker compose down -v
 
         log_info "Removendo dados..."
         rm -rf data/{openclawd,kanban,postgres,redis}/*
@@ -208,7 +208,7 @@ restore_backup() {
 
     if [[ $REPLY =~ ^[Ss]$ ]]; then
         log_info "Parando serviços..."
-        docker-compose down
+        docker compose down
 
         log_info "Restaurando backup..."
         TEMP_DIR=$(mktemp -d)
@@ -233,7 +233,7 @@ update_system() {
     log_info "Atualizando sistema..."
 
     # Pull das últimas imagens
-    docker-compose pull
+    docker compose pull
 
     # Rebuild
     build_images
@@ -263,14 +263,14 @@ health_check() {
     fi
 
     # PostgreSQL
-    if docker-compose exec -T postgres pg_isready -U openclawd > /dev/null 2>&1; then
+    if docker compose exec -T postgres pg_isready -U openclawd > /dev/null 2>&1; then
         log_success "PostgreSQL: OK"
     else
         log_error "PostgreSQL: FALHOU"
     fi
 
     # Redis
-    if docker-compose exec -T redis redis-cli ping > /dev/null 2>&1; then
+    if docker compose exec -T redis redis-cli ping > /dev/null 2>&1; then
         log_success "Redis: OK"
     else
         log_error "Redis: FALHOU"

@@ -130,7 +130,7 @@ sudo ufw status
 
 ```bash
 # Verificar se serviço está ativo
-docker-compose ps
+docker compose ps
 
 # Reiniciar
 ./scripts/manage.sh restart

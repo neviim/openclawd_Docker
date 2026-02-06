@@ -268,7 +268,7 @@ labels:
   - "com.centurylinklabs.watchtower.enable=true"
 
 # Reiniciar container
-docker-compose up -d nome-do-container
+docker compose up -d nome-do-container
 
 # Reiniciar Watchtower
 ./scripts/watchtower-manage.sh restart
@@ -280,16 +280,16 @@ docker-compose up -d nome-do-container
 
 ```bash
 # Iniciar apenas Watchtower
-docker-compose up -d watchtower
+docker compose up -d watchtower
 
 # Parar Watchtower
-docker-compose stop watchtower
+docker compose stop watchtower
 
 # Ver logs
-docker-compose logs -f watchtower
+docker compose logs -f watchtower
 
 # Remover Watchtower
-docker-compose rm -f watchtower
+docker compose rm -f watchtower
 ```
 
 ### Via Docker Direto
@@ -460,9 +460,9 @@ curl -X POST -H 'Content-Type: application/json' \
 docker images | grep nome-do-container
 
 # Fazer rollback manual
-docker-compose down nome-do-container
+docker compose down nome-do-container
 docker tag imagem:tag-antiga imagem:tag-atual
-docker-compose up -d nome-do-container
+docker compose up -d nome-do-container
 
 # Ou restaurar do backup
 ./scripts/manage.sh restore backup-file.tar.gz

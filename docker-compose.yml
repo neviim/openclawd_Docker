@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Serviço principal Openclawd
   openclawd:
@@ -82,12 +80,12 @@ services:
 
   # Coletor de Logs e Métricas
   log-collector:
-    image: fluent/fluent-bit:latest
+    image: fluent/fluent-bit:3.2
     container_name: log-collector
     restart: unless-stopped
     volumes:
       - ./logs:/logs:ro
-      - ./config/fluent-bit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf:ro
+      - ./config/fluent-bit/fluent-bit.conf:/etc/fluent-bit/fluent-bit.conf:ro
     networks:
       - openclawd-network
     depends_on:
@@ -118,7 +116,7 @@ services:
     security_opt:
       - no-new-privileges:true
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U openclawd"]
+      test: ["CMD-SHELL", "pg_isready -U openclawd -d openclawd_monitor"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -151,10 +149,10 @@ services:
     container_name: openclawd-watchtower
     restart: unless-stopped
     environment:
+      - DOCKER_API_VERSION=1.44
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_INCLUDE_RESTARTING=true
       - WATCHTOWER_INCLUDE_STOPPED=false
-      - WATCHTOWER_POLL_INTERVAL=3600
       - WATCHTOWER_ROLLING_RESTART=true
       - WATCHTOWER_NOTIFICATIONS=shoutrrr
       - WATCHTOWER_NOTIFICATION_URL=${WATCHTOWER_NOTIFICATION_URL:-}

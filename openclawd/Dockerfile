@@ -1,46 +1,23 @@
 # Dockerfile para Openclawd - Versão Segura
-FROM node:20-alpine AS builder
+FROM node:20-alpine
 
 # Metadata
 LABEL maintainer="Openclawd Installation"
 LABEL version="1.0.0"
 LABEL description="Secure Openclawd Container"
 
-# Instalar dependências de build
-RUN apk add --no-cache \
-    python3 \
-    make \
-    g++ \
-    git
-
-# Criar diretório de trabalho
-WORKDIR /build
-
-# Copiar arquivos de dependências
-COPY package*.json ./
-
-# Instalar dependências
-RUN npm ci --only=production && \
-    npm cache clean --force
-
-# Copiar código fonte
-COPY . .
-
-# Build da aplicação (se necessário)
-RUN npm run build 2>/dev/null || echo "No build script found"
-
-# Estágio final - imagem mínima
-FROM node:20-alpine
-
-# Instalar apenas o necessário
+# Instalar dependências necessárias
 RUN apk add --no-cache \
     curl \
-    tini && \
+    tini \
+    python3 \
+    make \
+    g++ && \
     rm -rf /var/cache/apk/*
 
 # Criar usuário não-root
-RUN addgroup -g 1000 openclawd && \
-    adduser -D -u 1000 -G openclawd openclawd
+RUN addgroup -S openclawd && \
+    adduser -S -G openclawd openclawd
 
 # Criar diretórios necessários
 RUN mkdir -p /app /app/data /app/config /app/tmp /logs && \
@@ -49,11 +26,15 @@ RUN mkdir -p /app /app/data /app/config /app/tmp /logs && \
 # Configurar diretório de trabalho
 WORKDIR /app
 
-# Copiar da fase de build
-COPY --from=builder --chown=openclawd:openclawd /build/node_modules ./node_modules
-COPY --from=builder --chown=openclawd:openclawd /build/dist ./dist 2>/dev/null || true
-COPY --from=builder --chown=openclawd:openclawd /build/src ./src 2>/dev/null || true
-COPY --chown=openclawd:openclawd . .
+# Copiar arquivos de dependências
+COPY --chown=openclawd:openclawd package*.json ./
+
+# Instalar dependências
+RUN npm install --omit=dev && \
+    npm cache clean --force
+
+# Copiar código fonte
+COPY --chown=openclawd:openclawd ./src ./src
 
 # Mudar para usuário não-root
 USER openclawd

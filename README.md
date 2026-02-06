@@ -97,7 +97,7 @@ Sistema completo de execução do Openclawd em containers Docker com monitoramen
 
 ```bash
 docker --version
-docker-compose --version
+docker compose --version
 ```
 
 ## 🚀 Instalação Rápida
@@ -390,7 +390,7 @@ curl http://localhost:8080/health
 docker scan openclawd-app:latest
 
 # Audit de segurança
-docker-compose exec openclawd npm audit
+docker compose exec openclawd npm audit
 
 # Verificar permissões
 ls -la data/ config/
@@ -446,10 +446,10 @@ ls -t | tail -n +8 | xargs rm -f
 ./scripts/manage.sh logs <serviço>
 
 # Verificar status
-docker-compose ps
+docker compose ps
 
 # Reiniciar serviço específico
-docker-compose restart <serviço>
+docker compose restart <serviço>
 ```
 
 ### Erro de conexão entre serviços
@@ -459,7 +459,7 @@ docker-compose restart <serviço>
 docker network inspect openclawd_Docker_openclawd-network
 
 # Testar conectividade
-docker-compose exec openclawd ping kanban-monitor
+docker compose exec openclawd ping kanban-monitor
 ```
 
 ### Disco cheio
@@ -524,17 +524,17 @@ services:
 
 ```bash
 # Iniciar em modo dev com hot reload
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up
 ```
 
 ### Executar Testes
 
 ```bash
 # Openclawd
-docker-compose exec openclawd npm test
+docker compose exec openclawd npm test
 
 # Kanban Monitor
-docker-compose exec kanban-monitor npm test
+docker compose exec kanban-monitor npm test
 ```
 
 ### Adicionar Novos Serviços

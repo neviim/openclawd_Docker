@@ -101,7 +101,7 @@ Expõe as portas 3000 e 8080 diretamente:
 #     - "0.0.0.0:3000:3000"
 
 # Ou usar o override
-docker-compose -f docker-compose.yml -f docker-compose.remote.yml up -d
+docker compose -f docker-compose.yml -f docker-compose.remote.yml up -d
 ```
 
 **Acessar:**
@@ -180,7 +180,7 @@ sudo chown $USER:$USER config/nginx/ssl/*.pem
 nano config/nginx/conf.d/openclawd.conf
 
 # Reiniciar
-docker-compose -f docker-compose.yml -f docker-compose.remote.yml restart nginx-proxy
+docker compose -f docker-compose.yml -f docker-compose.remote.yml restart nginx-proxy
 ```
 
 #### Usando Certificado Auto-assinado (Desenvolvimento):
@@ -364,7 +364,7 @@ async function createActivity() {
 ./scripts/remote-access.sh disable
 
 # Ver logs do Nginx
-docker-compose logs -f nginx-proxy
+docker compose logs -f nginx-proxy
 
 # Ver estatísticas do Nginx
 curl http://localhost/nginx_status
@@ -376,7 +376,7 @@ curl http://localhost/nginx_status
 
 1. **Verificar se o serviço está rodando:**
 ```bash
-docker-compose ps
+docker compose ps
 ```
 
 2. **Testar localmente:**
@@ -405,14 +405,14 @@ ping SEU_IP
 
 ```bash
 # Verificar se backend está rodando
-docker-compose ps
+docker compose ps
 
 # Ver logs
-docker-compose logs openclawd
-docker-compose logs kanban-monitor
+docker compose logs openclawd
+docker compose logs kanban-monitor
 
 # Reiniciar serviços
-docker-compose restart
+docker compose restart
 ```
 
 ### Erro 401 Unauthorized
@@ -446,7 +446,7 @@ Rate limit atingido. Aguarde um minuto ou ajuste o limite em:
 docker stats
 
 # Verificar logs do Nginx
-docker-compose logs nginx-proxy | grep -i slow
+docker compose logs nginx-proxy | grep -i slow
 
 # Aumentar rate limit se necessário
 nano config/nginx/nginx.conf

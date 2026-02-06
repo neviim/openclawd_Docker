@@ -1,0 +1,81 @@
+{
+  "watchtower": {
+    "name": "Openclawd Watchtower",
+    "version": "1.0.0",
+    "enabled": true
+  },
+  "schedule": {
+    "cron": "0 0 2 * * *",
+    "description": "Verifica atualizações diariamente às 2h da manhã"
+  },
+  "monitoring": {
+    "containers": {
+      "openclawd-app": {
+        "enabled": true,
+        "auto_update": false,
+        "notify_on_update": true,
+        "backup_before_update": true
+      },
+      "kanban-monitor": {
+        "enabled": true,
+        "auto_update": false,
+        "notify_on_update": true,
+        "backup_before_update": true
+      },
+      "openclawd-postgres": {
+        "enabled": false,
+        "auto_update": false,
+        "reason": "Atualizações de banco de dados requerem backup manual"
+      },
+      "openclawd-redis": {
+        "enabled": false,
+        "auto_update": false,
+        "reason": "Cache - não requer atualizações automáticas"
+      },
+      "log-collector": {
+        "enabled": false,
+        "auto_update": false,
+        "reason": "Serviço auxiliar - atualizar manualmente se necessário"
+      }
+    }
+  },
+  "notifications": {
+    "enabled": false,
+    "channels": {
+      "email": {
+        "enabled": false,
+        "smtp_server": "smtp.example.com",
+        "smtp_port": 587,
+        "from": "watchtower@example.com",
+        "to": "admin@example.com"
+      },
+      "slack": {
+        "enabled": false,
+        "webhook_url": ""
+      },
+      "discord": {
+        "enabled": false,
+        "webhook_url": ""
+      },
+      "telegram": {
+        "enabled": false,
+        "bot_token": "",
+        "chat_id": ""
+      }
+    }
+  },
+  "policies": {
+    "cleanup_old_images": true,
+    "rolling_restart": true,
+    "include_restarting": true,
+    "include_stopped": false,
+    "monitor_only": false
+  },
+  "advanced": {
+    "poll_interval": 3600,
+    "timeout": 300,
+    "label_enable": "com.centurylinklabs.watchtower.enable",
+    "debug": false,
+    "trace": false
+  }
+}

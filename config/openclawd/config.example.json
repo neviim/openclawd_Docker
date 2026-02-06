@@ -1,0 +1,46 @@
+{
+  "app": {
+    "name": "Openclawd",
+    "version": "1.0.0",
+    "environment": "production"
+  },
+  "server": {
+    "port": 3000,
+    "host": "0.0.0.0",
+    "timeout": 30000
+  },
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "rotation": {
+      "enabled": true,
+      "maxFiles": 10,
+      "maxSize": "10m"
+    }
+  },
+  "activities": {
+    "maxInMemory": 1000,
+    "cleanupInterval": 3600000,
+    "retentionDays": 30
+  },
+  "monitoring": {
+    "enabled": true,
+    "interval": 5000,
+    "metrics": {
+      "cpu": true,
+      "memory": true,
+      "eventLoop": true
+    }
+  },
+  "security": {
+    "rateLimit": {
+      "enabled": true,
+      "windowMs": 60000,
+      "maxRequests": 100
+    },
+    "cors": {
+      "enabled": true,
+      "origins": ["*"]
+    }
+  }
+}

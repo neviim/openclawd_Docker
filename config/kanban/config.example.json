@@ -1,0 +1,65 @@
+{
+  "monitor": {
+    "name": "Kanban Monitor",
+    "version": "1.0.0",
+    "refreshInterval": 5000,
+    "maxActivitiesDisplay": 100
+  },
+  "server": {
+    "port": 8080,
+    "host": "0.0.0.0"
+  },
+  "openclawd": {
+    "host": "openclawd",
+    "port": 3000,
+    "timeout": 5000,
+    "retryAttempts": 3
+  },
+  "columns": [
+    {
+      "id": 0,
+      "name": "Pendente",
+      "color": "#94a3b8",
+      "statuses": ["pending"]
+    },
+    {
+      "id": 1,
+      "name": "Em Progresso",
+      "color": "#3b82f6",
+      "statuses": ["running", "in_progress"]
+    },
+    {
+      "id": 2,
+      "name": "Concluído",
+      "color": "#22c55e",
+      "statuses": ["completed", "success"]
+    },
+    {
+      "id": 3,
+      "name": "Falhou",
+      "color": "#ef4444",
+      "statuses": ["failed", "error"]
+    }
+  ],
+  "database": {
+    "path": "/data/kanban.db",
+    "backup": {
+      "enabled": true,
+      "interval": 86400000,
+      "retention": 7
+    }
+  },
+  "websocket": {
+    "enabled": true,
+    "pingInterval": 30000,
+    "maxClients": 100
+  },
+  "notifications": {
+    "enabled": false,
+    "types": {
+      "newActivity": false,
+      "statusChange": true,
+      "errors": true
+    }
+  }
+}
